@@ -1,7 +1,7 @@
 [build]
 target = "riscv32imac-unknown-none-elf"
-rustflags = ["-C", "link-arg=-Tlink.x", "-L", "/home/valaphee/Documents/ch58x"]
+rustflags = ["-C", "link-arg=-Tlink.x"]
 
 [unstable]
 build-std = ["core", "compiler_builtins", "alloc"]
-build-std-features = ["compiler-builtins-mem", "panic_immediate_abort"]
+build-std-features = ["compiler-builtins-mem"]
