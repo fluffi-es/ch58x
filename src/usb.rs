@@ -144,8 +144,15 @@ impl<'a> embassy_usb_driver::Driver<'a> for Driver<'a> {
                     .uep_dma(i)
                     .write(|w| unsafe { w.uep0_dma().bits(buf as u16) });
                 self.buf_offset += 64;
+            } else if i == 4 {
+                // ep0
+                let buf = unsafe { self.buf.as_mut_ptr().offset(self.buf_offset as _) };
+                self.usb
+                    .uep_dma(i)
+                    .write(|w| unsafe { w.uep0_dma().bits(buf as u16) });
             }
             if i == 4 {
+                // ep0
                 self.buf_offset += 64;
             }
         }
@@ -193,6 +200,8 @@ impl embassy_usb_driver::Bus for Bus {
     async fn poll(&mut self) -> Event {
         if !self.inited {
             self.usb.ctrl().write(|w| w);
+            self.usb.dev_ad().reset();
+            self.usb.int_fg().write(|w| unsafe { w.bits(0xFF) });
 
             unsafe { Sys::steal() }
                 .pin_analog_ie()
@@ -201,8 +210,6 @@ impl embassy_usb_driver::Bus for Bus {
                 .udev_ctrl()
                 .write(|w| w.ud_port_en().set_bit().ud_pd_dis().set_bit());
 
-            self.usb.dev_ad().reset();
-            self.usb.int_fg().write(|w| unsafe { w.bits(0xFF) });
             self.usb.ctrl().write(|w| {
                 w.uc_dev_pu_en()
                     .set_bit()
@@ -279,15 +286,15 @@ impl embassy_usb_driver::Bus for Bus {
     }
 
     fn endpoint_set_stalled(&mut self, _ep_addr: EndpointAddress, _stalled: bool) {
-        todo!()
+        unimplemented!()
     }
 
     fn endpoint_is_stalled(&mut self, _ep_addr: EndpointAddress) -> bool {
-        todo!()
+        unimplemented!()
     }
 
     async fn remote_wakeup(&mut self) -> Result<(), Unsupported> {
-        todo!()
+        Err(Unsupported)
     }
 }
 
