@@ -1,4 +1,4 @@
-use crate::interrupt::CoreInterrupt;
+use crate::{gpio::{Floating, Input}, interrupt::CoreInterrupt};
 pub use crate::raw::adc::cfg::{ClkDiv, PgaGain as Gain};
 use core::{future::poll_fn, task::Poll};
 use embassy_sync::waitqueue::AtomicWaker;
@@ -11,6 +11,90 @@ pub struct Adc {
 
 pub trait AdcChannel {
     fn channel(&self) -> u8;
+}
+
+impl AdcChannel for crate::gpio::PA4<Input<Floating>> {
+    fn channel(&self) -> u8 {
+        0
+    }
+}
+
+impl AdcChannel for crate::gpio::PA5<Input<Floating>> {
+    fn channel(&self) -> u8 {
+        1
+    }
+}
+
+impl AdcChannel for crate::gpio::PA12<Input<Floating>> {
+    fn channel(&self) -> u8 {
+        2
+    }
+}
+
+impl AdcChannel for crate::gpio::PA13<Input<Floating>> {
+    fn channel(&self) -> u8 {
+        3
+    }
+}
+
+impl AdcChannel for crate::gpio::PA14<Input<Floating>> {
+    fn channel(&self) -> u8 {
+        4
+    }
+}
+
+impl AdcChannel for crate::gpio::PA15<Input<Floating>> {
+    fn channel(&self) -> u8 {
+        5
+    }
+}
+
+impl AdcChannel for crate::gpio::PA3<Input<Floating>> {
+    fn channel(&self) -> u8 {
+        6
+    }
+}
+
+impl AdcChannel for crate::gpio::PA2<Input<Floating>> {
+    fn channel(&self) -> u8 {
+        7
+    }
+}
+
+impl AdcChannel for crate::gpio::PA1<Input<Floating>> {
+    fn channel(&self) -> u8 {
+        8
+    }
+}
+
+impl AdcChannel for crate::gpio::PA0<Input<Floating>> {
+    fn channel(&self) -> u8 {
+        9
+    }
+}
+
+impl AdcChannel for crate::gpio::PA6<Input<Floating>> {
+    fn channel(&self) -> u8 {
+        10
+    }
+}
+
+impl AdcChannel for crate::gpio::PA7<Input<Floating>> {
+    fn channel(&self) -> u8 {
+        11
+    }
+}
+
+impl AdcChannel for crate::gpio::PA8<Input<Floating>> {
+    fn channel(&self) -> u8 {
+        12
+    }
+}
+
+impl AdcChannel for crate::gpio::PA9<Input<Floating>> {
+    fn channel(&self) -> u8 {
+        13
+    }
 }
 
 pub struct Vbat;

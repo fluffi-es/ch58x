@@ -55,18 +55,36 @@ impl Executor {
             // in pender
             unsafe { self.inner.poll() };
 
-            // SAFETY: WFE can be issued at will
-            unsafe { Pfic::steal() }
-                .sctlr()
-                .modify(|_, w| w.wfitowfe().set_bit());
-            riscv::asm::wfi();
+            wfe();
         }
     }
 }
 
 #[export_name = "__pender"]
 fn __pender(_: *mut ()) {
-    // SAFETY: SEV can be issued at will
+    sev();
+}
+
+pub fn wfi() {
+    unsafe { Pfic::steal() }
+        .sctlr()
+        .modify(|_, w| w.wfitowfe().clear_bit());
+    riscv::asm::wfi();
+}
+
+pub fn wfe() {
+    /*unsafe { Pfic::steal() }
+        .sctlr()
+        .modify(|_, w| w.setevent().set_bit().wfitowfe().set_bit());
+    riscv::asm::wfi();*/
+
+    unsafe { Pfic::steal() }
+        .sctlr()
+        .modify(|_, w| w.wfitowfe().set_bit());
+    riscv::asm::wfi();
+}
+
+pub fn sev() {
     unsafe { Pfic::steal() }
         .sctlr()
         .modify(|_, w| w.setevent().set_bit());

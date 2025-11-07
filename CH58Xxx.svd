@@ -546,13 +546,11 @@
               <name>PWR_MUST_0010</name>
               <description>RWA, power plan enable, auto clear after sleep executed</description>
               <bitRange>[14:11]</bitRange>
-              <access>read-only</access>
             </field>
             <field>
               <name>PWR_PLAN_EN</name>
               <description>RWA, must write 0010</description>
               <bitRange>[15:15]</bitRange>
-              <access>read-only</access>
             </field>
           </fields>
         </register>

@@ -1477,8 +1477,12 @@ pub mod sys {
         pub type PwrDcdcPreW<'a, REG> = crate::BitWriter<'a, REG>;
         #[doc = "Field `PWR_MUST_0010` reader - RWA, power plan enable, auto clear after sleep executed"]
         pub type PwrMust0010R = crate::FieldReader;
+        #[doc = "Field `PWR_MUST_0010` writer - RWA, power plan enable, auto clear after sleep executed"]
+        pub type PwrMust0010W<'a, REG> = crate::FieldWriter<'a, REG, 4>;
         #[doc = "Field `PWR_PLAN_EN` reader - RWA, must write 0010"]
         pub type PwrPlanEnR = crate::BitReader;
+        #[doc = "Field `PWR_PLAN_EN` writer - RWA, must write 0010"]
+        pub type PwrPlanEnW<'a, REG> = crate::BitWriter<'a, REG>;
         impl R {
             #[doc = "Bit 0 - RWA, power for retention 2KB SRAM"]
             #[inline(always)]
@@ -1571,6 +1575,16 @@ pub mod sys {
             #[inline(always)]
             pub fn pwr_dcdc_pre(&mut self) -> PwrDcdcPreW<'_, PowerPlanSpec> {
                 PwrDcdcPreW::new(self, 10)
+            }
+            #[doc = "Bits 11:14 - RWA, power plan enable, auto clear after sleep executed"]
+            #[inline(always)]
+            pub fn pwr_must_0010(&mut self) -> PwrMust0010W<'_, PowerPlanSpec> {
+                PwrMust0010W::new(self, 11)
+            }
+            #[doc = "Bit 15 - RWA, must write 0010"]
+            #[inline(always)]
+            pub fn pwr_plan_en(&mut self) -> PwrPlanEnW<'_, PowerPlanSpec> {
+                PwrPlanEnW::new(self, 15)
             }
         }
         #[doc = "RWA, power plan before sleep instruction, SAM\n\nYou can [`read`](crate::Reg::read) this register and get [`power_plan::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`power_plan::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
